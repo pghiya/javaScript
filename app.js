@@ -6,6 +6,22 @@
  //Function which will be called when application loads to fetch inital configuration
  init()
 
+document.querySelector('.btn-rule').addEventListener('click',function(){
+    var newLine = "\r\n"
+    var msg = "1. Pig dice game is played with a single six-sided die and players are allowed to make any number of rolls in each turn."
+    msg += newLine;
+    msg += "2. After each roll the dice value is added to their score for that turn.";
+    msg += newLine;
+    msg += "3. After each roll player can decide whether to stop rolling (HOLD) and claim the total turn score or continue rolling.";
+    msg+= newLine;
+    msg += "4. If they roll a 1 then they lose all points scored in a particular turn and turn is then passed to the opponent. This has no impact on their overall score.";
+    msg += newLine;
+    msg += "5. If players decide to stop rolling, they get the points scored so far which is added to their overall score.";
+    msg += newLine;
+    msg += "6. The first player to score 50 points (or any other predetermined score at the beginning of the game) wins the game.";
+    alert(msg);
+});
+
  function init() {
     //initialization of variables
     scores = [0, 0];
@@ -36,7 +52,7 @@
 	document.querySelector('.player-1-panel').classList.remove('active');
     
     //By default player 1 should be active 
-	document.querySelector('.player-0-panel').classList.add('active');
+    document.querySelector('.player-0-panel').classList.add('active');
 }
 
  //Adding event on roll button when action = click, this will be listened and is called as event listener
@@ -89,7 +105,7 @@ document.querySelector('.btn-hold').addEventListener('click',function(){
         document.querySelector('#score-'+activePlayer).textContent = scores[activePlayer];
 
         //Condition to check if player has won
-        if(scores[activePlayer]>25){
+        if(scores[activePlayer]>50){
             var otherPlayer = activePlayer == 0? 1:0;
             gamePlaying = false;
 
