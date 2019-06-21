@@ -2,7 +2,7 @@
 // Q. FIND OUT MAXIMUM NUM. FROM A ARRAY OF SIZE N WITHOUT USING INBUILT METHODS
 
 // There are 2 ways in wich I prefer to solve this
-// 1st - This can be also used if asked to sort array in descending
+// 1st - This can be also used if asked to sort array in descending.
 var a, size, temp;
 
 a = [1, 10, 5, 12, 4, 13, 19]; //Give any random inputs
