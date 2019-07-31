@@ -6,17 +6,33 @@
             <input type="text" placeholder="Search">
         </nav>
         <!--Added to show total count of records from reponse fetched using api-->
-        <div>
+        <div *ngIf="userDetails">
             <label>TotalCount : </label>
-            <span>100</span>
+            <span>{{userDetails.total_count}}</span>
         </div>
         <!--Using table to show the data split in 3 columns for Avtar,Info & Details-->
-        <table class="table table-bordered table-sm">
+        <!--Applied ngIf so that table will exist only if data is present-->
+        <table *ngIf="userDetails" class="table table-bordered table-sm">
             <tbody>
-                <tr>
-                    <td>Image</td>
-                    <td>Data</td>
-                    <td>Button</td>
+                <!--Using ngFor to itreate over data items and create row for each-->
+                <tr *ngFor="let users of userDetails.items">
+                    <td><img class="avatar" src="{{users.avatar_url}}"></td>
+                    <td>
+                        <div>
+                            <h1>{{users.login}}</h1>
+                            <label>Profile URL :</label>
+                            <span><a href="{{users.html_url}}" target="_blank"> {{users.html_url}}</a></span>
+                            <div>
+                                <label>User Id :</label>
+                                <span> {{users.login}}</span>
+                            </div>
+                            <div>
+                                <label>Rank :</label>
+                                <span> {{users.score}}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td><button>Details</button></td>
                 </tr>
             </tbody>
         </table>
