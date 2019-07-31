@@ -1,5 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
-
+/* Added below CSS to apply font-family globally across application */
  * {
     font-family: 'Lato', sans-serif;
  }
