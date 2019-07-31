@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { FetchUserDetailsService } from '../service/fetch-user-details.service'
 
 @Component({
   selector: 'app-application-view',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ApplicationViewComponent implements OnInit {
 
-  constructor() { }
+  userDetails: String[] //to store the returned data
 
-  ngOnInit() {
+  constructor(private fetchUserDetails: FetchUserDetailsService) { }
+
+  ngOnInit(): void {
+    this.fetchUserDetails.getUserDetails().subscribe(data => {
+      this.userDetails = data as String[];
+    }, (err: HttpErrorResponse) => {
+      alert(err.message);
+    });
   }
 
 }

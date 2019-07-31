@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { ApplicationViewComponent } from './application-view/application-view.component';
+import { HttpClientModule } from '@angular/common/http'; //Offers a simplified client HTTP API for application
+import { FetchUserDetailsService } from './service/fetch-user-details.service';
 
 @NgModule({
   declarations: [
@@ -14,9 +16,10 @@ import { ApplicationViewComponent } from './application-view/application-view.co
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [FetchUserDetailsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
