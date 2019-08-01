@@ -10,14 +10,14 @@
         <!--Added to show total count of records from reponse fetched using api-->
         <div *ngIf="userDetails" style="padding-top: 10px;">
             <label>TotalCount : </label>
-            <span>{{userDetails.total_count}}</span>
+            <span> {{userDetails.items.length}}</span>
         </div>
         <!--Using table to show the data split in 3 columns for Avtar,Info & Details-->
         <!--Applied ngIf so that table will exist only if data is present-->
         <table *ngIf="userDetails" class="table table-bordered table-sm">
             <tbody style="width: 80%">
                 <!--Using ngFor to itreate over data items and create row for each-->
-                <tr *ngFor="let users of userDetails.items; let i = index" >
+                <tr *ngFor="let users of userDetails.items | paginate: { itemsPerPage: 3, currentPage: p }; let i = index" >
                     <td style="display:none">{{i}}</td>
                     <td class="firstColumn"><img class="avatar" src="{{users.avatar_url}}"></td>
                     <td class="secondColumn">
@@ -56,5 +56,6 @@
                 </tr>
             </tbody>
         </table>
+        <pagination-controls (pageChange)="p = $event" style="margin-left: 60%"></pagination-controls>
     </div>
 </div>
