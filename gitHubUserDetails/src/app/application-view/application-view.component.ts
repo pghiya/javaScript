@@ -10,6 +10,7 @@ import { FetchUserDetailsService } from '../service/fetch-user-details.service'
 export class ApplicationViewComponent implements OnInit {
 
   userDetails: String[] //to store the returned data
+  repoDetails: String[]
   
   constructor(private fetchUserDetails: FetchUserDetailsService) { }
 
@@ -20,16 +21,15 @@ export class ApplicationViewComponent implements OnInit {
   fetchInitialData(){
     this.fetchUserDetails.getUserDetails('').subscribe(data => {
       this.userDetails = data as String[];
-      //this.fetchUserNames(this.userDetails)
+      this.fetchUserNames(this.userDetails)
     }, (err: HttpErrorResponse) => {
-      alert(err.message);
+      console.log(err.message);
     });
   }
 
   fetchUserNames(data){
     data.items.forEach(element => {
-      var id = element.login;
-      this.fetchUserDetails.getUserName(id).subscribe(data => {
+      this.fetchUserDetails.getUserName(element.url).subscribe(data => {
         element.fullName = data as String[];
       }, (err: HttpErrorResponse) => {
         console.log(err.message);
@@ -37,7 +37,16 @@ export class ApplicationViewComponent implements OnInit {
     });
   }
 
-  onShow(i) {
+  fetchRepoDetails(name){
+    this.fetchUserDetails.getRepoDetails(name).subscribe(data => {
+      this.repoDetails = data as String[];
+      console.log(this.repoDetails)
+    }, (err: HttpErrorResponse) => {
+      console.log(err.message);
+    });
+  }
+
+  onShow(i,name) {
     var blockId = 'dummy_'+i,
         detailButton = 'details_'+i,
         collapseButton = 'collapse_'+i;
@@ -45,6 +54,8 @@ export class ApplicationViewComponent implements OnInit {
     document.getElementById(blockId).style.display = 'block';
     document.getElementById(detailButton).style.display = 'none';
     document.getElementById(collapseButton).style.display = 'block';
+
+    this.fetchRepoDetails(name)
   }
 
   onCollapse(i) {
@@ -60,7 +71,7 @@ export class ApplicationViewComponent implements OnInit {
  onSearch(event){
    this.fetchUserDetails.getUserDetails(event.target.value).subscribe(data => {
      this.userDetails = data as String[];
-     //this.fetchUserNames(this.userDetails)
+     this.fetchUserNames(this.userDetails)
    },(err: HttpErrorResponse) => {
      console.log(err.message);
    });
@@ -69,18 +80,17 @@ export class ApplicationViewComponent implements OnInit {
 onSelect(){
   var sortType = event.target.value;
   if(sortType == "[A-Z]"){
-    this.userDetails.items.sort(this.sortAsc)
+    this.userDetails.items.sort(this.sortAZ)
   } else if(sortType == "[Z-A]"){
-    this.userDetails.items.sort(this.sortDesc);
+    this.userDetails.items.sort(this.sortZA);
   } else if(sortType == "By Rank - Ascending"){
     this.userDetails.items.sort(this.sortByRankAsc)
   } else if(sortType == "By Rank - Descending"){
     this.userDetails.items.sort(this.sortByRankDesc)
   }
-  debugger
 }
 
-sortAsc( a, b ) {
+sortZA( a, b ) {
   if ( a.login > b.login ){
     return -1;
   }
@@ -90,7 +100,7 @@ sortAsc( a, b ) {
   return 0;
 }
 
-sortDesc( a, b ) {
+sortAZ( a, b ) {
   if ( a.login < b.login ){
     return -1;
   }

@@ -64,3 +64,6 @@ table {
     margin-left: 415px;
     width: 390px;
 }
+.data:nth-of-type(odd){
+    background-color: aliceblue
+}

@@ -31,7 +31,7 @@
                             <h1 *ngIf="users.fullName">{{users.fullName.name}}</h1>
                             <label>Profile URL :</label>
                             <span><a href="{{users.html_url}}" target="_blank"> {{users.html_url}}</a></span>
-                            <div>
+                            <div style="padding-top: 2%;">
                                 <label>User Id :</label>
                                 <span> {{users.login}}</span>
                             </div>
@@ -40,23 +40,20 @@
                                 <span> {{users.score}}</span>
                             </div>
                             <div id="dummy_{{i}}"  style="display: none">
-                                <div>
-                                    <label>Dummy : </label>
-                                    <span>Dummy</span>
-                                </div>
-                                <div>
-                                    <label>Dummy : </label>
-                                    <span>Dummy</span>
-                                </div>
-                                <div>
-                                    <label>Dummy : </label>
-                                    <span>Dummy</span>
-                                </div>
+                                <!-- <div  id="dummy_{{i}}"> -->
+                                    <ng-container *ngIf="repoDetails">
+                                        <br><br>
+                                        <div *ngFor="let data of repoDetails;" class="data">
+                                            <label>{{data.html_url}} : </label>
+                                            <span style="float: right;">{{data.language}}</span>
+                                        </div>
+                                    </ng-container>   
+                                <!-- </div> -->
                             </div>
                         </div>
                     </td>
                     <td class="thirdColumn">
-                        <button class="btnDetails" id="details_{{i}}" (click)="onShow(i)">Details</button>
+                        <button class="btnDetails" id="details_{{i}}" (click)="onShow(i,users.login)">Details</button>
                         <button class="btnCollapse" id="collapse_{{i}}" (click)="onCollapse(i)">Collapse</button>
                     </td>
                 </tr>
