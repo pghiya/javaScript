@@ -3,8 +3,14 @@
         <nav class="navbar navbar-expand-md navbar-dark topBar">
             <div>
                 <!--Added 2 textbox to mark space as placeholder-->
-                <input type="text" placeholder="Add dropdown">
-                <input type="text" placeholder="Search" (keyup)="onSearch($event)">
+                <select class="dropdown-toggle" class="sortDropdown" (change)="onSelect()">
+                    <option value="" disabled>Sort By</option>
+                    <option> [A-Z] </option>
+                    <option> [Z-A] </option>
+                    <option> By Rank - Ascending </option>
+                    <option> By Rank - Descending </option>
+                </select>               
+                <input type="text" placeholder="Search" (keyup)="onSearch($event)" class ="searchBox">
             </div>
         </nav>
         <!--Added to show total count of records from reponse fetched using api-->
@@ -56,6 +62,8 @@
                 </tr>
             </tbody>
         </table>
-        <pagination-controls (pageChange)="p = $event" style="margin-left: 60%"></pagination-controls>
+        <div style="margin-left: 60%">
+            <pagination-controls (pageChange)="p = $event"  previousLabel="" nextLabel=""></pagination-controls>
+        </div>       
     </div>
 </div>

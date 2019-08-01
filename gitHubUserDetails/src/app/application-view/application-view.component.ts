@@ -66,4 +66,45 @@ export class ApplicationViewComponent implements OnInit {
    });
 }
 
+onSelect(){
+  var sortType = event.target.value;
+  if(sortType == "[A-Z]"){
+    this.userDetails.items.sort(this.sortAsc)
+  } else if(sortType == "[Z-A]"){
+    this.userDetails.items.sort(this.sortDesc);
+  } else if(sortType == "By Rank - Ascending"){
+    this.userDetails.items.sort(this.sortByRankAsc)
+  } else if(sortType == "By Rank - Descending"){
+    this.userDetails.items.sort(this.sortByRankDesc)
+  }
+  debugger
+}
+
+sortAsc( a, b ) {
+  if ( a.login > b.login ){
+    return -1;
+  }
+  if ( a.login < b.login ){
+    return 1;
+  }
+  return 0;
+}
+
+sortDesc( a, b ) {
+  if ( a.login < b.login ){
+    return -1;
+  }
+  if ( a.login > b.login ){
+    return 1;
+  }
+  return 0;
+}
+
+sortByRankAsc(a,b){
+  return a.score - b.score
+}
+
+sortByRankDesc(a,b){
+  return b.score - a.score
+}
 }
