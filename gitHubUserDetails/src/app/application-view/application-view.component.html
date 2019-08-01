@@ -19,7 +19,7 @@
                     <td><img class="avatar" src="{{users.avatar_url}}"></td>
                     <td>
                         <div>
-                            <h1>{{users.login}}</h1>
+                            <h1 *ngIf="users.fullName">{{users.fullName.name}}</h1>
                             <label>Profile URL :</label>
                             <span><a href="{{users.html_url}}" target="_blank"> {{users.html_url}}</a></span>
                             <div>

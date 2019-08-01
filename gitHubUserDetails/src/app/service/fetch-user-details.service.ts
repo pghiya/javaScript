@@ -13,5 +13,8 @@ export class FetchUserDetailsService {
     return this.httpService.get(url)
   }
 
-
+  getUserName(userName){
+    var url = 'https://api.github.com/users/' //Base URL
+      return this.httpService.get(url + userName) //Appending user id to fetch specific users Full name
+  }
 }
