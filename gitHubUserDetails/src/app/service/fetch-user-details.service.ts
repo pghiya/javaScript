@@ -8,9 +8,10 @@ export class FetchUserDetailsService {
 
   constructor(private httpService: HttpClient) { }
 
-  getUserDetails(){
-    var url = 'https://api.github.com/search/users?q=a' //Passing 'a' as uservalue to fetch inital data
-    return this.httpService.get(url)
+  getUserDetails(value){
+    value = value == '' ? 'ghpr' : value;
+    var url = 'https://api.github.com/search/users?q=' //Passing 'a' as uservalue to fetch inital data
+    return this.httpService.get(url + value)
   }
 
   getUserName(userName){

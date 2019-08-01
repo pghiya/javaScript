@@ -40,5 +40,15 @@ table {
     border-radius: 5px;
     background-color: transparent;
     border-color: mediumturquoise;
+}
 
+.btnCollapse {
+    margin-top: 70%;
+    float: right;
+    width: 120px;
+    margin-right: 10%;
+    border-radius: 5px;
+    background-color: transparent;
+    border-color: mediumturquoise;
+    display: none
 }

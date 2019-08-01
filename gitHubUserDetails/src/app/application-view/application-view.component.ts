@@ -18,9 +18,9 @@ export class ApplicationViewComponent implements OnInit {
   }
 
   fetchInitialData(){
-    this.fetchUserDetails.getUserDetails().subscribe(data => {
+    this.fetchUserDetails.getUserDetails('').subscribe(data => {
       this.userDetails = data as String[];
-      this.fetchUserNames(this.userDetails)
+      //this.fetchUserNames(this.userDetails)
     }, (err: HttpErrorResponse) => {
       alert(err.message);
     });
@@ -32,9 +32,38 @@ export class ApplicationViewComponent implements OnInit {
       this.fetchUserDetails.getUserName(id).subscribe(data => {
         element.fullName = data as String[];
       }, (err: HttpErrorResponse) => {
-        alert(err.message);
+        console.log(err.message);
       })
     });
   }
+
+  onShow(i) {
+    var blockId = 'dummy_'+i,
+        detailButton = 'details_'+i,
+        collapseButton = 'collapse_'+i;
+
+    document.getElementById(blockId).style.display = 'block';
+    document.getElementById(detailButton).style.display = 'none';
+    document.getElementById(collapseButton).style.display = 'block';
+  }
+
+  onCollapse(i) {
+    var blockId = 'dummy_'+i,
+       detailButton = 'details_'+i,
+       collapseButton = 'collapse_'+i;
+
+   document.getElementById(blockId).style.display = 'none';
+   document.getElementById(detailButton).style.display = 'block';
+   document.getElementById(collapseButton).style.display = 'none';
+ }
+
+ onSearch(event){
+   this.fetchUserDetails.getUserDetails(event.target.value).subscribe(data => {
+     this.userDetails = data as String[];
+     //this.fetchUserNames(this.userDetails)
+   },(err: HttpErrorResponse) => {
+     console.log(err.message);
+   });
+}
 
 }

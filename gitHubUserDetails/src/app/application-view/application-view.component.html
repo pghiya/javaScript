@@ -4,7 +4,7 @@
             <div>
                 <!--Added 2 textbox to mark space as placeholder-->
                 <input type="text" placeholder="Add dropdown">
-                <input type="text" placeholder="Search">
+                <input type="text" placeholder="Search" (keyup)="onSearch($event)">
             </div>
         </nav>
         <!--Added to show total count of records from reponse fetched using api-->
@@ -17,7 +17,8 @@
         <table *ngIf="userDetails" class="table table-bordered table-sm">
             <tbody style="width: 80%">
                 <!--Using ngFor to itreate over data items and create row for each-->
-                <tr *ngFor="let users of userDetails.items">
+                <tr *ngFor="let users of userDetails.items; let i = index" >
+                    <td style="display:none">{{i}}</td>
                     <td class="firstColumn"><img class="avatar" src="{{users.avatar_url}}"></td>
                     <td class="secondColumn">
                         <div>
@@ -32,9 +33,26 @@
                                 <label>Rank :</label>
                                 <span> {{users.score}}</span>
                             </div>
+                            <div id="dummy_{{i}}"  style="display: none">
+                                <div>
+                                    <label>Dummy : </label>
+                                    <span>Dummy</span>
+                                </div>
+                                <div>
+                                    <label>Dummy : </label>
+                                    <span>Dummy</span>
+                                </div>
+                                <div>
+                                    <label>Dummy : </label>
+                                    <span>Dummy</span>
+                                </div>
+                            </div>
                         </div>
                     </td>
-                    <td class="thirdColumn"><button class="btnDetails">Details</button></td>
+                    <td class="thirdColumn">
+                        <button class="btnDetails" id="details_{{i}}" (click)="onShow(i)">Details</button>
+                        <button class="btnCollapse" id="collapse_{{i}}" (click)="onCollapse(i)">Collapse</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
