@@ -1,23 +1,25 @@
 <div class="container">
     <div class="row">
-        <nav class="navbar navbar-expand-md navbar-dark" style="background-color:#2980b9; width:100%">
-            <!--Added 2 textbox to mark space as placeholder-->
-            <input type="text" placeholder="Add dropdown">
-            <input type="text" placeholder="Search">
+        <nav class="navbar navbar-expand-md navbar-dark topBar">
+            <div>
+                <!--Added 2 textbox to mark space as placeholder-->
+                <input type="text" placeholder="Add dropdown">
+                <input type="text" placeholder="Search">
+            </div>
         </nav>
         <!--Added to show total count of records from reponse fetched using api-->
-        <div *ngIf="userDetails">
+        <div *ngIf="userDetails" style="padding-top: 10px;">
             <label>TotalCount : </label>
             <span>{{userDetails.total_count}}</span>
         </div>
         <!--Using table to show the data split in 3 columns for Avtar,Info & Details-->
         <!--Applied ngIf so that table will exist only if data is present-->
         <table *ngIf="userDetails" class="table table-bordered table-sm">
-            <tbody>
+            <tbody style="width: 80%">
                 <!--Using ngFor to itreate over data items and create row for each-->
                 <tr *ngFor="let users of userDetails.items">
-                    <td><img class="avatar" src="{{users.avatar_url}}"></td>
-                    <td>
+                    <td class="firstColumn"><img class="avatar" src="{{users.avatar_url}}"></td>
+                    <td class="secondColumn">
                         <div>
                             <h1 *ngIf="users.fullName">{{users.fullName.name}}</h1>
                             <label>Profile URL :</label>
@@ -32,7 +34,7 @@
                             </div>
                         </div>
                     </td>
-                    <td><button>Details</button></td>
+                    <td class="thirdColumn"><button class="btnDetails">Details</button></td>
                 </tr>
             </tbody>
         </table>

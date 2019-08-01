@@ -1,4 +1,44 @@
 
+table {
+    border-collapse: separate;
+    border-spacing: 0 15px; 
+    border: hidden;
+}
+
+.topBar {
+    width : 100%; 
+    background-color:#2980b9; 
+    margin-top: 20px
+}
+
 .avatar {
     border-radius: 50%;
+    width: 80%;
+    margin-left: 15%
+}
+
+.firstColumn {
+    width: 20%;
+    border-right: 0px solid;
+}
+
+.secondColumn {
+    width: 60%;
+    border-left: 0px solid;
+    border-right: 0px solid;
+}
+
+.thirdColumn {
+    border-left: 0px solid;
+}
+
+.btnDetails {
+    margin-top: 70%;
+    float: right;
+    width: 120px;
+    margin-right: 10%;
+    border-radius: 5px;
+    background-color: transparent;
+    border-color: mediumturquoise;
+
 }
