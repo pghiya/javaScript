@@ -20,6 +20,7 @@ export class ApplicationViewComponent implements OnInit {
 
   fetchInitialData(){
     this.fetchUserDetails.getUserDetails('').subscribe(data => {
+      document.getElementById('loadingScreen').style.display = 'none';
       this.userDetails = data as String[];
       this.fetchUserNames(this.userDetails)
     }, (err: HttpErrorResponse) => {
@@ -37,8 +38,14 @@ export class ApplicationViewComponent implements OnInit {
     });
   }
 
-  fetchRepoDetails(name){
+  fetchRepoDetails(name,blockId,detailButton,collapseButton){
     this.fetchUserDetails.getRepoDetails(name).subscribe(data => {
+      document.getElementById('loadingScreen').style.display = 'none';
+
+      document.getElementById(blockId).style.display = 'block';
+      document.getElementById(detailButton).style.display = 'none';
+      document.getElementById(collapseButton).style.display = 'block';
+
       this.repoDetails = data as String[];
       console.log(this.repoDetails)
     }, (err: HttpErrorResponse) => {
@@ -51,11 +58,18 @@ export class ApplicationViewComponent implements OnInit {
         detailButton = 'details_'+i,
         collapseButton = 'collapse_'+i;
 
-    document.getElementById(blockId).style.display = 'block';
-    document.getElementById(detailButton).style.display = 'none';
-    document.getElementById(collapseButton).style.display = 'block';
+    // document.getElementById(blockId).style.display = 'block';
+    // document.getElementById(detailButton).style.display = 'none';
+    // document.getElementById(collapseButton).style.display = 'block';
 
-    this.fetchRepoDetails(name)
+    document.getElementById('loadingScreen').style.display = 'block';
+
+    for(let j = 0; j < 3; j++){
+      if(i != j){
+        this.onCollapse(j);
+      }
+    }
+    this.fetchRepoDetails(name,blockId,detailButton,collapseButton)
   }
 
   onCollapse(i) {
