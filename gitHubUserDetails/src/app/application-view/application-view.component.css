@@ -83,3 +83,10 @@ table {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.search-icon {
+    position: absolute;
+    top: 50%;
+    right: 25px;
+    margin-top: -10px;
+}

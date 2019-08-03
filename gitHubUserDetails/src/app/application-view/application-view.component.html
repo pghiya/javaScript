@@ -8,7 +8,7 @@
         <nav class="navbar navbar-expand-md navbar-dark topBar">
             <div>
                 <!--Added 2 textbox to mark space as placeholder-->
-                <select class="dropdown-toggle" class="sortDropdown" (change)="onSelect()">
+                <select class="dropdown-toggle" class="sortDropdown" (change)="onSelect($event)">
                     <option value="" disabled>Sort By</option>
                     <option> [A-Z] </option>
                     <option> [Z-A] </option>
@@ -16,6 +16,9 @@
                     <option> By Rank - Descending </option>
                 </select>               
                 <input type="text" placeholder="Search" (keyup)="onSearch($event)" class ="searchBox">
+                <span class="search-icon">
+                    <i class="fa fa-search"></i>
+                </span>
             </div>
         </nav>
         <!--Added to show total count of records from reponse fetched using api-->

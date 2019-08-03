@@ -9,7 +9,7 @@ import { FetchUserDetailsService } from '../service/fetch-user-details.service'
 })
 export class ApplicationViewComponent implements OnInit {
 
-  userDetails: String[] //to store the returned data
+  userDetails: any //to store the returned data
   repoDetails: String[]
   
   constructor(private fetchUserDetails: FetchUserDetailsService) { }
@@ -24,6 +24,8 @@ export class ApplicationViewComponent implements OnInit {
       this.userDetails = data as String[];
       this.fetchUserNames(this.userDetails)
     }, (err: HttpErrorResponse) => {
+      document.getElementById('loadingScreen').style.display = 'none';
+      alert('Operation could not be completed.Please try in sometime')
       console.log(err.message);
     });
   }
@@ -31,8 +33,10 @@ export class ApplicationViewComponent implements OnInit {
   fetchUserNames(data){
     data.items.forEach(element => {
       this.fetchUserDetails.getUserName(element.url).subscribe(data => {
+        document.getElementById('loadingScreen').style.display = 'none';
         element.fullName = data as String[];
       }, (err: HttpErrorResponse) => {
+        document.getElementById('loadingScreen').style.display = 'none';
         console.log(err.message);
       })
     });
@@ -49,6 +53,8 @@ export class ApplicationViewComponent implements OnInit {
       this.repoDetails = data as String[];
       console.log(this.repoDetails)
     }, (err: HttpErrorResponse) => {
+      document.getElementById('loadingScreen').style.display = 'none';
+      alert('Operation could not be completed.Please try in sometime')
       console.log(err.message);
     });
   }
@@ -91,7 +97,7 @@ export class ApplicationViewComponent implements OnInit {
    });
 }
 
-onSelect(){
+onSelect(event){
   var sortType = event.target.value;
   if(sortType == "[A-Z]"){
     this.userDetails.items.sort(this.sortAZ)
