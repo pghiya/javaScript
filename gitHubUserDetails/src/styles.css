@@ -1,4 +1,4 @@
 /* Added below CSS to apply font-family globally across application */
- * {
-    font-family: 'Lato', sans-serif;
+ * :not(i){
+    font-family: 'Lato' !important;
  }

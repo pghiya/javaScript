@@ -99,13 +99,13 @@ export class ApplicationViewComponent implements OnInit {
 
 onSelect(event){
   var sortType = event.target.value;
-  if(sortType == "[A-Z]"){
+  if(sortType == "Sort By Name - [A-Z]"){
     this.userDetails.items.sort(this.sortAZ)
-  } else if(sortType == "[Z-A]"){
+  } else if(sortType == "Sort By Name - [Z-A]"){
     this.userDetails.items.sort(this.sortZA);
-  } else if(sortType == "By Rank - Ascending"){
+  } else if(sortType == "Sort By Rank - Ascending"){
     this.userDetails.items.sort(this.sortByRankAsc)
-  } else if(sortType == "By Rank - Descending"){
+  } else if(sortType == "Sort By Rank - Descending"){
     this.userDetails.items.sort(this.sortByRankDesc)
   }
 }
