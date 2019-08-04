@@ -88,7 +88,7 @@
         </table>
         <!--Added to show pagination-->
         <div style="margin-left: 60%">
-            <pagination-controls (pageChange)="p = $event" previousLabel="" nextLabel=""></pagination-controls>
+            <pagination-controls (pageChange)="onPageChange($event)" directionLinks="false" previousLabel="" nextLabel=""></pagination-controls>
         </div>
     </div>
 </div>

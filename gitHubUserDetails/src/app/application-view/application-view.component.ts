@@ -181,4 +181,8 @@ sortByRankDesc(a,b){
   return b.score - a.score
 }
 
+onPageChange(event){
+  this.paginationConfig.currentPage = event
+}
+
 }
