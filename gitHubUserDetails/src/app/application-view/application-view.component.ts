@@ -13,11 +13,17 @@ export class ApplicationViewComponent implements OnInit {
   userDetails: any; //to store API fetched userdetails
   repoDetails: String[]; //to store API fecthed user specific repository details
   p: number = 1; //Default page
+  paginationConfig : any; //Object for pagination config
   
   constructor(private fetchUserDetails: FetchUserDetailsService) { }
 
   //Method to fetch initial data when the application is loaded.
   ngOnInit(): void {
+    //Setting parameters for pagination
+    this.paginationConfig = {
+      itemsPerPage : 3,
+      currentPage : this.p
+    }
     this.fetchInitialData('')
   }
 
@@ -92,7 +98,7 @@ export class ApplicationViewComponent implements OnInit {
     document.getElementById('loadingScreen').style.display = 'block';
 
     //Logic to make sure at a time only single user can view details.
-    for(let j = 0; j < 3; j++){
+    for(let j = 0; j < this.paginationConfig.itemsPerPage; j++){
       if(i != j){
         this.onCollapse(j);
       }

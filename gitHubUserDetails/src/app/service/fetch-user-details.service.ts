@@ -15,7 +15,7 @@ export class FetchUserDetailsService {
     value = value == '' ? undefined : value;
 
     var url = 'https://api.github.com/search/users?q=' //Fixed URL
-    return this.httpService.get(url + value) //Appended with parameter
+    return this.httpService.get(url + value +'&per_page=100') //Appended with parameter & page limit
   }
 
   getUserName(userName){

@@ -35,7 +35,7 @@
         <table *ngIf="userDetails" class="table table-bordered table-sm">
             <tbody style="width: 80%">
                 <!--Using ngFor to itreate over data items and create row for each, also added pagination & variable to store index-->
-                <tr *ngFor="let users of userDetails.items | paginate: { itemsPerPage: 3, currentPage: p }; let i = index">
+                <tr *ngFor="let users of userDetails.items | paginate: paginationConfig; let i = index">
                     <td style="display:none">{{i}}</td>
                     <td class="firstColumn">
                         <img class="avatar" src="{{users.avatar_url}}">
