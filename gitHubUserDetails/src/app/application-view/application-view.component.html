@@ -1,4 +1,5 @@
 <div class="container">
+    <!--Added view logic for masking screen-->
     <div class="loadingScreen" id="loadingScreen" style="display: none">
         <div class="loadingIcon">
             Loading...
@@ -7,16 +8,19 @@
     <div class="row">
         <nav class="navbar navbar-expand-md navbar-dark topBar">
             <div>
-                <!--Added 2 textbox to mark space as placeholder-->
+                <!--Added dropdown for sort option and text box for searching-->
+                <!--Added change event on dropdown to perform selected sort-->
                 <select class="dropdown-toggle" class="sortDropdown" (change)="onSelect($event)">
-                    <option value="" disabled>Sort By</option>
-                    <option> [A-Z] </option>
-                    <option> [Z-A] </option>
-                    <option> By Rank - Ascending </option>
-                    <option> By Rank - Descending </option>
-                </select>               
-                <input type="text" placeholder="Search" (keyup)="onSearch($event)" class ="searchBox">
+                    <option value="" disabled>Sort By Name - [A-Z]</option>>
+                    <option> Sort By Name - [A-Z] </option>
+                    <option> Sort By Name - [Z-A] </option>
+                    <option> Sort By Rank - Ascending </option>
+                    <option> Sort By Rank - Descending </option>
+                </select>
+                <!--Added keyup event on textbox to filter search on each keystroke-->
+                <input type="text" placeholder="Search" (keyup)="onSearch($event)" class="searchBox">
                 <span class="search-icon">
+                    <!--Addded class to show search icon-->
                     <i class="fa fa-search"></i>
                 </span>
             </div>
@@ -26,40 +30,46 @@
             <label>TotalCount : </label>
             <span> {{userDetails.items.length}}</span>
         </div>
-        <!--Using table to show the data split in 3 columns for Avtar,Info & Details-->
+        <!--Using table to show the data split in 3 columns for Avatar,Info & Details-->
         <!--Applied ngIf so that table will exist only if data is present-->
         <table *ngIf="userDetails" class="table table-bordered table-sm">
             <tbody style="width: 80%">
-                <!--Using ngFor to itreate over data items and create row for each-->
-                <tr *ngFor="let users of userDetails.items | paginate: { itemsPerPage: 3, currentPage: p }; let i = index" >
+                <!--Using ngFor to itreate over data items and create row for each, also added pagination & variable to store index-->
+                <tr *ngFor="let users of userDetails.items | paginate: { itemsPerPage: 3, currentPage: p }; let i = index">
                     <td style="display:none">{{i}}</td>
-                    <td class="firstColumn"><img class="avatar" src="{{users.avatar_url}}"></td>
+                    <td class="firstColumn">
+                        <img class="avatar" src="{{users.avatar_url}}">
+                    </td>
                     <td class="secondColumn">
+                        <!--Displaying username instead of full name due to api ratelimit issue.-->
                         <div>
-                            <h1 *ngIf="users.fullName">{{users.fullName.name}}</h1>
+                            <!--If api worked fine uncomment the code below and comment line below it to show userfull name-->
+                            <!-- <h1 *ngIf="users.fullName">{{users.fullName.name}}</h1> -->
+                            <h1>{{users.login}}</h1>
                             <label>Profile URL :</label>
                             <span><a href="{{users.html_url}}" target="_blank"> {{users.html_url}}</a></span>
                             <div style="padding-top: 2%;">
-                                <label>User Id :</label>
-                                <span> {{users.login}}</span>
+                                <label>isAdmin :</label>
+                                <span> {{users.site_admin}}</span>
                             </div>
                             <div>
                                 <label>Rank :</label>
                                 <span> {{users.score}}</span>
                             </div>
-                            <div id="dummy_{{i}}"  style="display: none">
-                                <!-- <div  id="dummy_{{i}}"> -->
-                                    <ng-container *ngIf="repoDetails">
-                                        <br><br>
-                                        <div *ngFor="let data of repoDetails;" class="data">
-                                            <label>{{data.html_url}} : </label>
-                                            <span style="float: right;">{{data.language}}</span>
-                                        </div>
-                                    </ng-container>   
-                                <!-- </div> -->
+                            <!--Added display block to show details, when clicked on details button. Appended index with id to make it unique-->
+                            <div id="detailsBlock_{{i}}" style="display: none">
+                                <ng-container *ngIf="repoDetails">
+                                    <br><br>
+                                    <!--Iterate over fetched repository details and display URL & language-->
+                                    <div *ngFor="let data of repoDetails;" class="data">
+                                        <label>{{data.html_url}} : </label>
+                                        <span style="float: right;">{{data.language}}</span>
+                                    </div>
+                                </ng-container>
                             </div>
                         </div>
                     </td>
+                    <!--Added logic to show/hide details/collapse button as per condition,and click event-->
                     <td class="thirdColumn">
                         <button class="btnDetails" id="details_{{i}}" (click)="onShow(i,users.login)">Details</button>
                         <button class="btnCollapse" id="collapse_{{i}}" (click)="onCollapse(i)">Collapse</button>
@@ -67,8 +77,9 @@
                 </tr>
             </tbody>
         </table>
+        <!--Added to show pagination-->
         <div style="margin-left: 60%">
-            <pagination-controls (pageChange)="p = $event"  previousLabel="" nextLabel=""></pagination-controls>
-        </div>       
+            <pagination-controls (pageChange)="p = $event" previousLabel="" nextLabel=""></pagination-controls>
+        </div>
     </div>
 </div>
