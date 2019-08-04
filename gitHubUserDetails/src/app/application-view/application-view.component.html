@@ -11,11 +11,11 @@
                 <!--Added dropdown for sort option and text box for searching-->
                 <!--Added change event on dropdown to perform selected sort-->
                 <select class="dropdown-toggle" class="sortDropdown" (change)="onSelect($event)">
-                    <option value="" disabled>Sort By Name - [A-Z]</option>>
-                    <option> Sort By Name - [A-Z] </option>
-                    <option> Sort By Name - [Z-A] </option>
-                    <option> Sort By Rank - Ascending </option>
-                    <option> Sort By Rank - Descending </option>
+                    <option value="" disabled>Sort By Name (A-Z)</option>>
+                    <option> Sort By Name (A-Z) </option>
+                    <option> Sort By Name (Z-A) </option>
+                    <option> Sort By Rank &#8593;</option>
+                    <option> Sort By Rank &#8595;</option>
                 </select>
                 <!--Added keyup event on textbox to filter search on each keystroke-->
                 <input type="text" placeholder="Search" (keyup)="onSearch($event)" class="searchBox">
@@ -64,6 +64,15 @@
                                     <div *ngFor="let data of repoDetails;" class="data">
                                         <label>{{data.html_url}} : </label>
                                         <span style="float: right;">{{data.language}}</span>
+                                        <br>
+                                        <label>Watchers Count :</label>
+                                        <span style="float: right;">{{data.watchers_count}}</span>
+                                        <br>
+                                        <label>StarGazers Count :</label>
+                                        <span style="float: right;">{{data.stargazers_count}}</span>
+                                        <br>
+                                        <label>Forks Count :</label>
+                                        <span style="float: right;">{{data.forks_count}}</span>
                                     </div>
                                 </ng-container>
                             </div>

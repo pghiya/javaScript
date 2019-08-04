@@ -132,13 +132,13 @@ export class ApplicationViewComponent implements OnInit {
 //Method to called when dropdown option is selected. Based on selection redirect to appropriate sorting method logic.
 onSelect(event){
   var sortType = event.target.value;
-  if(sortType == "Sort By Name - [A-Z]"){
+  if(sortType == "Sort By Name (A-Z)"){
     this.userDetails.items.sort(this.sortAZ)
-  } else if(sortType == "Sort By Name - [Z-A]"){
+  } else if(sortType == "Sort By Name (Z-A)"){
     this.userDetails.items.sort(this.sortZA);
-  } else if(sortType == "Sort By Rank - Ascending"){
+  } else if(sortType == "Sort By Rank ↑"){
     this.userDetails.items.sort(this.sortByRankAsc)
-  } else if(sortType == "Sort By Rank - Descending"){
+  } else if(sortType == "Sort By Rank ↓"){
     this.userDetails.items.sort(this.sortByRankDesc)
   }
 }
