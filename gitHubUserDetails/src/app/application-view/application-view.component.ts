@@ -119,6 +119,13 @@ export class ApplicationViewComponent implements OnInit {
 
  //Method to be called every time when user types anything search box
  onSearch(event){
+
+   if((event.target.value).match(/[^a-zA-Z0-9' ']/)){
+     alert('Only alpha numeric values are accepted');
+     event.target.value ='';
+     return
+   }
+
    this.fetchUserDetails.getUserDetails(event.target.value).subscribe(data => {
     document.getElementById('loadingScreen').style.display = 'none';
      this.userDetails = data as String[];
@@ -131,6 +138,7 @@ export class ApplicationViewComponent implements OnInit {
      //this.fetchUserNames(this.userDetails)
    },(err: HttpErrorResponse) => {
      document.getElementById('loadingScreen').style.display = 'none';
+     alert('Operation could not be completed.Please try in sometime')
      console.log(err.message);
    });
 }
