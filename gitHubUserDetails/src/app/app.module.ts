@@ -8,6 +8,7 @@ import { ApplicationViewComponent } from './application-view/application-view.co
 import { HttpClientModule } from '@angular/common/http'; //Offers a simplified client HTTP API for application
 import { FetchUserDetailsService } from './service/fetch-user-details.service';
 import { NgxPaginationModule } from 'ngx-pagination'; //Imported for pagination
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap'
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { NgxPaginationModule } from 'ngx-pagination'; //Imported for pagination
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgbTooltipModule
   ],
   providers: [FetchUserDetailsService],
   bootstrap: [AppComponent]

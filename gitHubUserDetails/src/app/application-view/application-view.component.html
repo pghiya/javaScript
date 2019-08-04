@@ -62,8 +62,11 @@
                                     <br><br>
                                     <!--Iterate over fetched repository details and display URL & language-->
                                     <div *ngFor="let data of repoDetails;" class="data">
-                                        <label>{{data.html_url}} : </label>
+                                        <label>{{data.name}} : </label>
                                         <span style="float: right;">{{data.language}}</span>
+                                        <br>
+                                        <label>Repository Link : </label>
+                                        <span style="float: right;"><a href="{{data.html_url}}" target="_blank">{{data.html_url}}</a></span>
                                         <br>
                                         <label>Watchers Count :</label>
                                         <span style="float: right;">{{data.watchers_count}}</span>
@@ -80,7 +83,9 @@
                     </td>
                     <!--Added logic to show/hide details/collapse button as per condition,and click event-->
                     <td class="thirdColumn">
-                        <button class="btnDetails" id="details_{{i}}" (click)="onShow(i,users.login)">Details</button>
+                        <!--Tooltip to show action on details button for the user-->
+                        <ng-template #tipContent>Click to check repository details for <b><i>{{users.login}}</i></b></ng-template>
+                        <button class="btnDetails" id="details_{{i}}" (click)="onShow(i,users.login)" [ngbTooltip]="tipContent">Details</button>
                         <button class="btnCollapse" id="collapse_{{i}}" (click)="onCollapse(i)">Collapse</button>
                     </td>
                 </tr>
