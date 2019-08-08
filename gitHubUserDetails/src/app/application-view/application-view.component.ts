@@ -14,6 +14,7 @@ export class ApplicationViewComponent implements OnInit {
   repoDetails: String[]; //to store API fecthed user specific repository details
   p: number = 1; //Default page
   paginationConfig : any; //Object for pagination config
+  timeoutId: any;
   
   constructor(private fetchUserDetails: FetchUserDetailsService) { }
 
@@ -29,25 +30,21 @@ export class ApplicationViewComponent implements OnInit {
 
   fetchInitialData(value) {
     this.fetchUserDetails.getUserDetails(value).subscribe(data => {
-      //Aded to remove screen masking
-      document.getElementById('loadingScreen').style.display = 'none';
-      this.userDetails = data as String[];
-      /*
-      Due to API rate limit issue it was failing. Tried using client_id & client_secret_key and also OAuth token but to no success.
-      So to keep the application working refering to login username as names instead of fullname.
-      But have also implemented logic to work based on user full name. So to do so just uncomment below method
-      */
+        //Aded to remove screen masking
+        document.getElementById('loadingScreen').style.display = 'none';
 
-      //this.fetchUserNames(this.userDetails)
+        this.userDetails = data as String[];
+        //Method to fetch user's fullname
+        this.fetchUserNames(this.userDetails)
     }, (err: HttpErrorResponse) => {
-      //Added to remove masking and show generic failure message to user and log actual reason in console.
-      document.getElementById('loadingScreen').style.display = 'none';
-      alert('Operation could not be completed.Please try in sometime')
-      console.log(err.message);
+        //Added to remove masking and show generic failure message to user and log actual reason in console.
+        document.getElementById('loadingScreen').style.display = 'none';
+      
+        alert('Operation could not be completed.Please try in sometime')
+        console.log(err.message);
     });
-  }
+}
 
-  //Code in implemented but not used. This logic is to be refered when working with users full name and API rate limit is overcome.
   fetchUserNames(data){
     //Iterating over all the users object fetched as respone during initial fetch call.
     data.items.forEach(element => {
@@ -112,35 +109,39 @@ export class ApplicationViewComponent implements OnInit {
        detailButton = 'details_'+i,
        collapseButton = 'collapse_'+i;
 
-   document.getElementById(blockId).style.display = 'none';
-   document.getElementById(detailButton).style.display = 'block';
-   document.getElementById(collapseButton).style.display = 'none';
+    if(document.getElementById(blockId)){
+      document.getElementById(blockId).style.display = 'none';
+      document.getElementById(detailButton).style.display = 'block';
+      document.getElementById(collapseButton).style.display = 'none';
+    }   
  }
 
  //Method to be called every time when user types anything search box
- onSearch(event){
-
-   if((event.target.value).match(/[^a-zA-Z0-9' ']/)){
-     alert('Only alpha numeric values are accepted');
-     event.target.value ='';
-     return
-   }
-
-   this.fetchUserDetails.getUserDetails(event.target.value).subscribe(data => {
+ onSearch(value){
+   this.fetchUserDetails.getUserDetails(value).subscribe(data => {
     document.getElementById('loadingScreen').style.display = 'none';
      this.userDetails = data as String[];
-     /*
-     Due to API rate limit issue it was failing. Tried using client_id & client_secret_key and also OAuth token but to no success.
-     So to keep the application working refering to login username as names instead of fullname.
-     But have also implemented logic to work based on user full name. So to do so just uncomment below method
-     */
-
-     //this.fetchUserNames(this.userDetails)
+     this.fetchUserNames(this.userDetails)
    },(err: HttpErrorResponse) => {
      document.getElementById('loadingScreen').style.display = 'none';
      alert('Operation could not be completed.Please try in sometime')
      console.log(err.message);
    });
+}
+
+onType(event){
+  var me = this; // to Retain scope
+
+  //Validation to allow only alphanumeric values
+  if((event.target.value).match(/[^a-zA-Z0-9' ']/)){
+      alert('Only alpha numeric values are accepted');
+      event.target.value ='';
+      return
+  }
+
+  //logic to not make API call for each key stroke but after 1 sec timeout to reduce the number of API interaction
+  clearTimeout(this.timeoutId);
+  this.timeoutId = setTimeout(function(){me.onSearch(event.target.value)},1000)
 }
 
 //Method to called when dropdown option is selected. Based on selection redirect to appropriate sorting method logic.
@@ -159,24 +160,36 @@ onSelect(event){
 
 //Sort descending based on username
 sortZA( a, b ) {
-  if ( a.login > b.login ){
-    return -1;
+  //condition to skip records with null username
+  if(a.fullName.name == null || b.fullName.name == null ){
+    return
+  }else{
+    //Logic to implement sorting & conversion toUpperCase for better sort results
+    if ( a.fullName.name.toUpperCase() > b.fullName.name.toUpperCase() ){
+      return -1;
+    }
+    if ( a.fullName.name.toUpperCase() < b.fullName.name.toUpperCase() ){
+      return 1;
+    }
+    return 0;
   }
-  if ( a.login < b.login ){
-    return 1;
-  }
-  return 0;
 }
 
 //Sort ascending based on username
 sortAZ( a, b ) {
-  if ( a.login < b.login ){
-    return -1;
+  //condition to skip records with null username
+  if(a.fullName.name == null || b.fullName.name == null ){
+    return
+  }else{
+    //Logic to implement sorting & conversion toUpperCase for better sort results
+    if ( a.fullName.name.toUpperCase() < b.fullName.name.toUpperCase() ){
+      return -1;
+    }
+    if ( a.fullName.name.toUpperCase() > b.fullName.name.toUpperCase() ){
+      return 1;
+    }
+    return 0;
   }
-  if ( a.login > b.login ){
-    return 1;
-  }
-  return 0;
 }
 
 //Sort ascending based on rank

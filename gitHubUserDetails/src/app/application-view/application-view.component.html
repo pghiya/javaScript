@@ -18,7 +18,8 @@
                     <option> Sort By Rank &#8595;</option>
                 </select>
                 <!--Added keyup event on textbox to filter search on each keystroke-->
-                <input type="text" placeholder="Search" (keyup)="onSearch($event)" class="searchBox">
+                <ng-template #toolTip>Type username to be searched</ng-template>
+                <input type="text" placeholder="Search" class="searchBox" (keyup) ="onType($event)" [ngbTooltip]="toolTip">
                 <span class="search-icon">
                     <!--Addded class to show search icon-->
                     <i class="fa fa-search"></i>
@@ -41,11 +42,9 @@
                         <img class="avatar" src="{{users.avatar_url}}">
                     </td>
                     <td class="secondColumn">
-                        <!--Displaying username instead of full name due to api ratelimit issue.-->
                         <div>
-                            <!--If api worked fine uncomment the code below and comment line below it to show userfull name-->
-                            <!-- <h1 *ngIf="users.fullName">{{users.fullName.name}}</h1> -->
-                            <h1>{{users.login}}</h1>
+                            <h1 *ngIf="users.fullName">{{users.fullName.name}}</h1>
+                            <!--<h1>{{users.login}}</h1>-->
                             <label>Profile URL :</label>
                             <span><a href="{{users.html_url}}" target="_blank"> {{users.html_url}}</a></span>
                             <div style="padding-top: 2%;">
