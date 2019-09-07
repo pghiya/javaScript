@@ -1,0 +1,39 @@
+<mat-nav-list>
+    <div class="container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email Id</th>
+            <th>Phone Number</th>
+            <th>Status</th>
+            <th>Delete</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let details of contacts">
+            <td>{{details.firstName}}</td>
+            <td>{{details.lastName}}</td>
+            <td>{{details.email}}</td>
+            <td>{{details.phoneNumber}}</td>
+            <td>{{details.status == true ? 'Active' : 'Inactive'}}</td>
+              <td>
+                  <button mat-icon-button (click)="delete(details)" matTooltip="Delete Contact" matTooltipPosition="right">
+                  <mat-icon aria-label="Delete">delete</mat-icon>
+                  </button>
+                </td>
+                <td>
+                    <button mat-icon-button (click)="edit(details)" matTooltip="Edit Contact" matTooltipPosition="right">
+                    <mat-icon aria-label="Edit">edit</mat-icon>
+                    </button>
+                </td>
+            </tr>
+          </tbody>
+      </table>
+    </div>  
+</mat-nav-list>
+<button mat-raised-button (click)="open()" matTooltip="Add Contact" matTooltipPosition="above">
+    <mat-icon>add</mat-icon>
+</button>
