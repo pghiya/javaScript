@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material'
-import { from } from 'rxjs';
 import { AddContactComponent } from 'src/app/shared/add-contact/add-contact.component';
-import { IContact, ContactsServiceService } from 'src/app/shared/services/contacts-service.service';
+import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
+import { ContactData, ContactsServiceService } from 'src/app/shared/services/contacts-service.service';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-contact-list',
@@ -11,7 +11,7 @@ import { IContact, ContactsServiceService } from 'src/app/shared/services/contac
 })
 export class ContactListComponent implements OnInit {
 
-  contacts: IContact[];
+  contacts: ContactData[];
   sequence: number;
 
   constructor(
@@ -27,47 +27,73 @@ export class ContactListComponent implements OnInit {
   open(){
     const win = this.popUp.open(AddContactComponent);
     win.componentInstance.title = 'Add Contact Details';
-    win.afterClosed().subscribe((contacts: IContact) => {
-      if (contacts) {
+
+    win.afterClosed().subscribe((contactDeatils: ContactData) => {
+      if (contactDeatils) {
+        var i, length=this.contacts.length;
+
+        for(i = 0; i < length; i++){
+          var currentContact = this.contacts[i]
+          if(currentContact.phoneNumber == contactDeatils.phoneNumber){
+            alert('Entry for the entered number already exists in Contact Book for user: ' + currentContact.firstName + ' ' + currentContact.lastName);
+            return false;
+          }
+        }
         this.sequence = this.sequence + 1;
-        contacts.id = this.sequence;
-        this.contacts.push(contacts);
+        contactDeatils.id = this.sequence;
+        this.contacts.push(contactDeatils);
       }
-      console.log('Success')
     });
   }
 
-  edit(contacts){
+  edit(data : any){
     const win = this.popUp.open(AddContactComponent);
     win.componentInstance.title = 'Edit Contact Details';
 
     win.componentInstance.contactForm.setValue({
-      id: contacts.id,
-      firstName: contacts.firstName,
-      lastName: contacts.lastName,
-      phoneNumber : contacts.phoneNumber,
-      email : contacts.email,
-      status : contacts.status
+      id: data.id,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      phoneNumber : data.phoneNumber,
+      email : data.email,
+      status : data.status
     });
 
-    win.afterClosed().subscribe((contactDeatils: IContact) => {
+    win.afterClosed().subscribe((contactDeatils: ContactData) => {
       if (contactDeatils) {
 
-        let cuurentContact = this.contacts.find(function(item) {
-          return item.id == +contactDeatils.id;
+        let currentContact = this.contacts.find(function(item) {
+          return item.id == contactDeatils.id;
         });
+
+        var i, length=this.contacts.length;
+
+        for(i = 0; i < length; i++){
+          var oldContact = this.contacts[i]
+          if(oldContact.phoneNumber == contactDeatils.phoneNumber && oldContact.id != contactDeatils.id){
+            alert('Entry for the entered number already exists in Contact Book for : ' + oldContact.firstName + ' ' + oldContact.lastName);
+            return false
+          }
+        }
         
-        cuurentContact.firstName = contactDeatils.firstName;
-        cuurentContact.lastName = contactDeatils.lastName;
-        cuurentContact.phoneNumber = contactDeatils.phoneNumber;
-        cuurentContact.email = contactDeatils.email;
-        cuurentContact.status = contactDeatils.status; 
+        currentContact.firstName = contactDeatils.firstName;
+        currentContact.lastName = contactDeatils.lastName;
+        currentContact.phoneNumber = contactDeatils.phoneNumber;
+        currentContact.email = contactDeatils.email;
+        currentContact.status = contactDeatils.status; 
                
       }
     });
   }
 
-  delete(contact) {
-    this.contacts.splice(this.contacts.indexOf(contact), 1);
+  confirm(data : any){
+    const win = this.popUp.open(ConfirmDialogComponent);
+
+    win.afterClosed().subscribe((result) => {
+      if(result){
+        this.contacts.splice(this.contacts.indexOf(data),1)
+      }
+    })
   }
+  
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { FormControl, FormGroup, Validator, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { from } from 'rxjs';
 
 @Component({
@@ -19,22 +19,22 @@ export class AddContactComponent implements OnInit {
   ngOnInit() {
   }
 
-  firstNameValidator = new FormControl('', [
+  firstNameControl = new FormControl('', [
     Validators.required,
-    Validators.pattern(/^[a-zA-Z]+$/)
+    Validators.pattern("^[a-zA-Z]+$")
   ]);
 
-  lastNameValidator = new FormControl('',[
+  lastNameControl = new FormControl('',[
     Validators.required,
-    Validators.pattern(/^[a-zA-Z]+$/)
+    Validators.pattern("^[a-zA-Z]+$")
   ])
 
-  phoneNumberValidator = new FormControl('',[
+  phoneNumberControl = new FormControl('',[
     Validators.required,
-    Validators.pattern(/(\(?[0-9]{3}\)?-?\s?[0-9]{3}-?[0-9]{4})/)
+    Validators.pattern("^[0-9]{10,10}$")
   ])
 
-  emailValidator = new FormControl('',[
+  emailControl = new FormControl('',[
     Validators.required,
     Validators.email
   ]);
@@ -45,10 +45,10 @@ export class AddContactComponent implements OnInit {
 
   contactForm: FormGroup = new FormGroup({
     id:this.idControl,
-    firstName: this.firstNameValidator,
-    lastName : this.lastNameValidator,
-    phoneNumber : this.phoneNumberValidator,
-    email: this.emailValidator,
+    firstName: this.firstNameControl,
+    lastName : this.lastNameControl,
+    phoneNumber : this.phoneNumberControl,
+    email: this.emailControl,
     status:this.statusControl
   });
 
@@ -57,13 +57,13 @@ export class AddContactComponent implements OnInit {
     this.contactForm.get(field).hasError('pattern') ? 'Name must be in alphabets only' : '';
   }
   getPhoneErrorMessage() {
-    return this.phoneNumberValidator.hasError('required') ? 'You must enter a value' :
-      this.phoneNumberValidator.hasError('pattern') ? 'Format must be (xxx) xxx-xxxx' : '';
+    return this.phoneNumberControl.hasError('required') ? 'You must enter a value' :
+      this.phoneNumberControl.hasError('pattern') ? 'Please enter a valid 10 digit Number' : '';
   }
 
   getEmailErrorMessage() {
-    return this.emailValidator.hasError('required') ? 'You must enter a value' :
-      this.emailValidator.hasError('email') ? 'Not a valid email' : '';
+    return this.emailControl.hasError('required') ? 'You must enter a value' :
+      this.emailControl.hasError('email') ? 'Not a valid email' : '';
   }
 
 }

@@ -4,20 +4,24 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HomePageComponent } from './views/home-page/home-page.component';
+import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { MaterialModule } from './shared/material/material.module'
-import { from } from 'rxjs';
+import { HomePageComponent } from './views/home-page/home-page.component';
 import { ContactListComponent } from './views/contact-list/contact-list.component';
 import { AddContactComponent } from './shared/add-contact/add-contact.component';
+import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
+
 import { ContactsServiceService } from './shared/services/contacts-service.service';
-import {FormsModule, ReactiveFormsModule } from '@angular/forms'
+
+import { MaterialModule } from './shared/material/material.module';
+
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
     ContactListComponent,
-    AddContactComponent
+    AddContactComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -29,6 +33,9 @@ import {FormsModule, ReactiveFormsModule } from '@angular/forms'
   ],
   providers: [ContactsServiceService],
   bootstrap: [AppComponent],
-  entryComponents: [AddContactComponent]
+  entryComponents: [
+    AddContactComponent,
+    ConfirmDialogComponent
+  ]
 })
 export class AppModule { }

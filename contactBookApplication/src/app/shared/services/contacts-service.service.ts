@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-export interface IContact {
+export interface ContactData {
   firstName: string;
   lastName: string;
   phoneNumber: number;
@@ -14,14 +14,14 @@ export interface IContact {
 })
 export class ContactsServiceService {
 
-  private readonly contacts: IContact[] = [
+  private readonly contacts: ContactData[] = [
 
-    { id: 1, firstName: 'John', lastName: 'Campo', phoneNumber: 9998883456, email: 'john@gmail.com', status: true },
-    { id: 2, firstName: 'Mike', lastName: 'Pipes', phoneNumber: 7777777777, email: 'mike@gmail.com', status: true },
+    { id: 1, firstName: 'Pranay', lastName: 'Ghiya', phoneNumber: 8483975222, email: 'pranayghiya@gmail.com', status: true },
+    { id: 2, firstName: 'Pranay', lastName: 'Ghiya', phoneNumber: 9876543210, email: 'pranayghiya@gmail.com', status: false },
 
   ];
 
-  getContacts(): IContact[] {
+  getContacts(): ContactData[] {
     return this.contacts;
   }
 }

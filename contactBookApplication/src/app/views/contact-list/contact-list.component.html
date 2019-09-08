@@ -1,5 +1,12 @@
 <mat-nav-list>
     <div class="container">
+      <div style="text-align: right">
+        <button style="background-color: darkgray" mat-raised-button (click)="open()" matTooltip="Add Contact" matTooltipPosition="below"> 
+          <mat-icon aria-label="Add">add</mat-icon>
+          <strong>Add new Contact</strong>
+        </button>
+      </div>
+      <br>
       <table class="table">
         <thead>
           <tr>
@@ -20,12 +27,12 @@
             <td>{{details.phoneNumber}}</td>
             <td>{{details.status == true ? 'Active' : 'Inactive'}}</td>
               <td>
-                  <button mat-icon-button (click)="delete(details)" matTooltip="Delete Contact" matTooltipPosition="right">
+                  <button mat-icon-button (click)="confirm(details)" matTooltip="Delete Contact" matTooltipPosition="right">
                   <mat-icon aria-label="Delete">delete</mat-icon>
                   </button>
                 </td>
                 <td>
-                    <button mat-icon-button (click)="edit(details)" matTooltip="Edit Contact" matTooltipPosition="right">
+                    <button mat-icon-button (click)="edit(details)" matTooltip="Edit Contact Details" matTooltipPosition="right">
                     <mat-icon aria-label="Edit">edit</mat-icon>
                     </button>
                 </td>
@@ -34,6 +41,3 @@
       </table>
     </div>  
 </mat-nav-list>
-<button mat-raised-button (click)="open()" matTooltip="Add Contact" matTooltipPosition="above">
-    <mat-icon>add</mat-icon>
-</button>
